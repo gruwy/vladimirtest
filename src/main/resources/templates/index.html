@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>HelmesTest - Main Form Page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+Please enter your name and pick the Sectors you are currently involved in.
+<br />
+<br />
+
+<form method="POST" th:action="@{/execute}">
+Name:
+    <input type="text" name="userName"/>
+    <input type="submit" name="action" value="Refill the Form Using Stored Data"/>
+<br />
+<br />
+
+Sectors:
+
+<br />
+    <select multiple size="5" class="form-control" name = "selectedSectorIdString">
+        <option name = "selectedSectorIdString"
+                th:block
+                th:each="sectorDto : ${sectorList}"
+                th:object="${sectorFormDto}"
+                th:text="${sectorDto.getSectorName()}"
+                th:value="${sectorDto.id}"
+                >
+        </option>
+    </select>
+
+    <br />
+    <br />
+    <input type="checkbox"> Agree to terms
+
+    <br />
+    <br />
+        <input type="submit" value="Add New User & Save Form" name="action"/>
+        <input type="submit" value="Update Form Choices For Existing User" name="action"/>
+</form>
+
+</body>
+</html>
+
+<!-- th:selected="${#arrays.contains(listOfSectorIdsInUserSectorForm, sectorDto.id)}"
+<input type="checkbox" th:field="*{sectorFormDto.agreeOnTerms}"> Agree to terms
+    <input type="text" name="userName" th:field="*{userDto.userName}"/>
+-->
