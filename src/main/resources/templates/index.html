@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
+
 Please enter your name and pick the Sectors you are currently involved in.
 <br />
 <br />
 
 <form method="POST" th:action="@{/execute}">
 Name:
-    <input type="text" name="userName"/>
+    <input type="text" name="userName" th:field="*{userDto.userName}"/>
     <input type="submit" name="action" value="Refill the Form Using Stored Data"/>
 <br />
 <br />
@@ -33,18 +34,23 @@ Sectors:
 
     <br />
     <br />
-    <input type="checkbox"> Agree to terms
+    <input type="checkbox" id="agreeOnTerms"> Agree to terms
 
     <br />
     <br />
-        <input type="submit" value="Add New User & Save Form" name="action"/>
-        <input type="submit" value="Update Form Choices For Existing User" name="action"/>
+    <input type="submit" id="addUser" value="Add New User & Save Form" name="action"/>
+    <input type="submit" id="updateUser" value="Update Form Choices For Existing User" name="action"/>
 </form>
-
 </body>
+<script>
+    var agreeOnTerms = document.getElementById('agreeOnTerms');
+    var addUser = document.getElementById('addUser');
+    var updateUser = document.getElementById('updateUser');
+    addUser.disabled = true;
+    updateUser.disabled = true;
+    agreeOnTerms.onchange = function() {
+        addUser.disabled = !this.checked;
+        updateUser.disabled = !this.checked;
+    };
+</script>
 </html>
-
-<!-- th:selected="${#arrays.contains(listOfSectorIdsInUserSectorForm, sectorDto.id)}"
-<input type="checkbox" th:field="*{sectorFormDto.agreeOnTerms}"> Agree to terms
-    <input type="text" name="userName" th:field="*{userDto.userName}"/>
--->

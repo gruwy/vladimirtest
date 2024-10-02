@@ -1,5 +1,6 @@
 package com.helmes.vladimirtest.controller;
 
+import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.service.SectorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,8 @@ public class IndexController {
     private final SectorService sectorService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, UserDto userDto) {
+        model.addAttribute("userDto", userDto);
         model.addAttribute("sectorList", sectorService.listSectors());
         return "index";
     }
