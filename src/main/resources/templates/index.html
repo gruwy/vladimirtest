@@ -13,7 +13,7 @@ Please enter your name and pick the Sectors you are currently involved in.
 
 <form method="POST" th:action="@{/execute}">
 Name:
-    <input type="text" name="userName" th:field="*{userDto.userName}"/>
+    <input type="text" id="userName" name="userName" th:value="*{userDto?.userName}" />
     <input type="submit" name="action" value="Refill the Form Using Stored Data"/>
 <br />
 <br />
@@ -25,7 +25,6 @@ Sectors:
         <option name = "selectedSectorIdString"
                 th:block
                 th:each="sectorDto : ${sectorList}"
-                th:object="${sectorFormDto}"
                 th:text="${sectorDto.getSectorName()}"
                 th:value="${sectorDto.id}"
                 >
@@ -34,7 +33,7 @@ Sectors:
 
     <br />
     <br />
-    <input type="checkbox" id="agreeOnTerms"> Agree to terms
+    <input type="checkbox" id="agreedToTerms" name="agreedToTerms" onchange="getAgreedOnTerms(this)" th:checked="${userDto?.agreedToTerms}"> Agree to terms
 
     <br />
     <br />
@@ -43,12 +42,12 @@ Sectors:
 </form>
 </body>
 <script>
-    var agreeOnTerms = document.getElementById('agreeOnTerms');
+    var agreedToTerms = document.getElementById('agreedToTerms');
     var addUser = document.getElementById('addUser');
     var updateUser = document.getElementById('updateUser');
     addUser.disabled = true;
     updateUser.disabled = true;
-    agreeOnTerms.onchange = function() {
+    agreedToTerms.onchange = function() {
         addUser.disabled = !this.checked;
         updateUser.disabled = !this.checked;
     };

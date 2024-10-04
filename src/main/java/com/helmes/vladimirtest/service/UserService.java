@@ -1,10 +1,9 @@
 package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 public interface UserService {
-    @Transactional
-    UserDto saveUser(UserDto userDto);
 
+    UserDto saveUser(Model model, UserDto userDto);
 }

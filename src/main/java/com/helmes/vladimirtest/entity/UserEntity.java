@@ -2,6 +2,7 @@ package com.helmes.vladimirtest.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 @Builder
 @Getter
@@ -15,17 +16,26 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vladimirtest.user_id_seq")
     @SequenceGenerator(name = "vladimirtest.user_id_seq", sequenceName = "vladimirtest.user_id_seq", allocationSize = 1)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "user_name", nullable = false)
     private String userName;
+
+    @Column(name = "agreed_to_terms", nullable = false)
+    private boolean agreedToTerms;
+
+    @ManyToMany
+    @JoinTable(name = "user_sector", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "sector_id"))
+    private List<SectorEntity> sectors;
 
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
                 ", userName='" + userName + '\'' +
+                ", agreedToTerms=" + agreedToTerms +
+                ", sectors=" + sectors +
                 '}';
     }
 }
