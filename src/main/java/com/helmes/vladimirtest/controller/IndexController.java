@@ -2,15 +2,17 @@ package com.helmes.vladimirtest.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.service.IndexService;
-import com.helmes.vladimirtest.service.SectorService;
 import com.helmes.vladimirtest.service.UserService;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
     private final IndexService indexService;
-    private final SectorService sectorService;
     private final UserService userService;
+
+    private final String addUser = "addUser";
+    private final String updateUser = "updateUser";
+    private final String refill = "refill";
 
     @GetMapping("/")
     public String index(Model model) {
@@ -27,10 +32,34 @@ public class IndexController {
         return "index";
     }
 
+    @GetMapping("/refill")
+    public String refillIndex(Model model,
+                              @Valid UserDto userDto) {
+        indexService.refillIndex(model, userDto);
+        return "index";
+    }
+
     @PostMapping("/execute")
     public String execute (Model model,
+                           @Param(value = "selectedSectorIdString") String selectedSectorIdString,
+                           @RequestParam(value="action") String action,
                            @Valid UserDto userDto) {
-        userService.saveUser(model, userDto);
-        return "redirect:/";
+        switch (action) {
+            case addUser -> {
+                userService.saveUser(model, selectedSectorIdString, userDto);
+                return "redirect:/";
+            }
+            case updateUser -> {
+                userService.updateUser(model, selectedSectorIdString, userDto);
+                return "redirect:/";
+            }
+            case refill -> {
+                userService.refillUserData(model, userDto);
+                return refillIndex(model, userDto);
+            }
+            default -> {
+                return "";
+            }
+        }
     }
 }

@@ -3,7 +3,9 @@ package com.helmes.vladimirtest.mapper;
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.UserEntity;
 import com.helmes.vladimirtest.mapper.base.EntityMapper;
+
 import org.mapstruct.Mapper;
+
 import java.util.List;
 
 @Mapper(componentModel = "spring")

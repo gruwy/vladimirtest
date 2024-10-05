@@ -1,12 +1,14 @@
 package com.helmes.vladimirtest.dto;
 
-import jakarta.validation.constraints.AssertTrue;
+import com.helmes.vladimirtest.entity.SectorEntity;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +24,8 @@ public class UserDto {
     private String userName;
 
     @NotNull
-    @AssertTrue
+    //@AssertTrue
     private boolean agreedToTerms;
 
+    private List<SectorEntity> sectors;
 }

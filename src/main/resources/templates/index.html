@@ -14,7 +14,7 @@ Please enter your name and pick the Sectors you are currently involved in.
 <form method="POST" th:action="@{/execute}">
 Name:
     <input type="text" id="userName" name="userName" th:value="*{userDto?.userName}" />
-    <input type="submit" name="action" value="Refill the Form Using Stored Data"/>
+    <input type="submit" id="refill" name="action" value="refill" placeholder="Add New User & Save Form"/>
 <br />
 <br />
 
@@ -27,6 +27,7 @@ Sectors:
                 th:each="sectorDto : ${sectorList}"
                 th:text="${sectorDto.getSectorName()}"
                 th:value="${sectorDto.id}"
+                th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
                 >
         </option>
     </select>
@@ -37,8 +38,8 @@ Sectors:
 
     <br />
     <br />
-    <input type="submit" id="addUser" value="Add New User & Save Form" name="action"/>
-    <input type="submit" id="updateUser" value="Update Form Choices For Existing User" name="action"/>
+    <input type="submit" id="addUser" name="action" value="addUser" placeholder="Add New User & Save Form"/>
+    <input type="submit" id="updateUser" name="action" value="updateUser" placeholder="Update Form Choices For Existing User"/>
 </form>
 </body>
 <script>

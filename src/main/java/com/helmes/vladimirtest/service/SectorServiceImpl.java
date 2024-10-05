@@ -1,11 +1,15 @@
 package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.SectorDto;
+import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.mapper.SectorMapper;
 import com.helmes.vladimirtest.repository.SectorRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -18,7 +22,18 @@ public class SectorServiceImpl implements SectorService {
     @Override
     public List<SectorDto> listSectors() {
         var sectors = sectorRepository.findAll();
-        List<SectorDto> dtos = sectorMapper.toDto(sectors);
-        return dtos;
+        return sectorMapper.toDto(sectors);
+    }
+
+    @Override
+    public List<SectorEntity> collectSectorsFromIdList(String selectedSectorIdString) {
+        List<String> sectorIdList = new ArrayList<>(Arrays.asList(selectedSectorIdString.split(",")));
+        List<SectorEntity> sectorEntities = new ArrayList<>();
+        for (String selectedSector : sectorIdList) {
+            SectorEntity sectorEntity = new SectorEntity();
+            sectorEntity.setId(Long.valueOf(selectedSector));
+            sectorEntities.add(sectorEntity);
+        }
+        return sectorEntities;
     }
 }

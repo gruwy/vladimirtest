@@ -16,9 +16,7 @@ public class SectorDto {
     @NotNull
     private long id;
 
-    @NotNull
-    @Size(min = 1, max = 255)
-    private String sectorCategory;
+    private long parentSectorId;
 
     @NotNull
     @Size(min = 1, max = 255)

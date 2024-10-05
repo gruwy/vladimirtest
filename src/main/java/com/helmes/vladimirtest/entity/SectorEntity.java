@@ -19,8 +19,8 @@ public class SectorEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "sector_category", nullable = false)
-    private String sectorCategory;
+    @Column(name = "parent_sector_id")
+    private Long parentSectorId;
 
     @Column(name = "sector_name", nullable = false)
     private String sectorName;
@@ -32,9 +32,8 @@ public class SectorEntity {
     public String toString() {
         return "SectorEntity{" +
                 "id=" + id +
-                ", sectorCategory='" + sectorCategory + '\'' +
+                ", parentSectorId=" + parentSectorId +
                 ", sectorName='" + sectorName + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

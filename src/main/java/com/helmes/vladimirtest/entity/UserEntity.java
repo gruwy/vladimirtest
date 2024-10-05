@@ -19,7 +19,7 @@ public class UserEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_name", nullable = false)
+    @Column(name = "user_name", nullable = false, unique = true)
     private String userName;
 
     @Column(name = "agreed_to_terms", nullable = false)
