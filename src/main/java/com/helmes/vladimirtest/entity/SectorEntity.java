@@ -1,7 +1,10 @@
 package com.helmes.vladimirtest.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -19,8 +22,13 @@ public class SectorEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "parent_sector_id")
-    private Long parentSectorId;
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "parent_sector_id")
+    private SectorEntity parentSector;
+
+    @OneToMany(mappedBy = "parentSector")
+    private List<SectorEntity> subSectors = new ArrayList<>();
 
     @Column(name = "sector_name", nullable = false)
     private String sectorName;
@@ -32,8 +40,10 @@ public class SectorEntity {
     public String toString() {
         return "SectorEntity{" +
                 "id=" + id +
-                ", parentSectorId=" + parentSectorId +
+                ", parentSector=" + parentSector +
+                ", subSectors=" + subSectors +
                 ", sectorName='" + sectorName + '\'' +
+                ", users=" + users +
                 '}';
     }
 }
