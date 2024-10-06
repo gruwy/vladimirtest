@@ -1,14 +1,12 @@
 package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Configurable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 @Service
-@Configurable
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class IndexServiceImpl implements IndexService {
 
     private final SectorService sectorService;
