@@ -26,5 +26,4 @@ public class SectorDto {
     @NotNull
     @Size(min = 1, max = 255)
     private String sectorName;
-
 }

@@ -6,11 +6,10 @@ import com.helmes.vladimirtest.entity.SectorEntity;
 import java.util.List;
 
 public interface SectorService {
+
     List<SectorDto> listSectors();
 
-    List<SectorDto> collectSectorsFromIdList(String selectedSectorIdString);
+    List<SectorEntity> collectSectorsFromIdList(String selectedSectorIdString);
 
-    List<SectorEntity> findMainSectors();
-
-    List<SectorEntity> findSubSectors();
+    List<SectorDto> getParentSectors();
 }

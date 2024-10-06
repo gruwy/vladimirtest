@@ -22,9 +22,9 @@ public class IndexController {
     private final IndexService indexService;
     private final UserService userService;
 
-    private final String addUser = "addUser";
-    private final String updateUser = "updateUser";
-    private final String refill = "refill";
+    private final String addUser = "Add New User & Save Form";
+    private final String updateUser = "Update Form Choices For Existing User";
+    private final String refill = "Refill Form";
 
     @GetMapping("/")
     public String index(Model model) {

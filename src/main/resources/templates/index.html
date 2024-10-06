@@ -14,22 +14,29 @@ Please enter your name and pick the Sectors you are currently involved in.
 <form method="POST" th:action="@{/execute}">
 Name:
     <input type="text" id="userName" name="userName" th:value="*{userDto?.userName}" />
-    <input type="submit" id="refill" name="action" value="refill" placeholder="Add New User & Save Form"/>
+    <input type="submit" id="refill" name="action" value="Refill Form"/>
 <br />
 <br />
 
 Sectors:
 
 <br />
-    <select multiple size="5" class="form-control" name = "selectedSectorIdString">
-        <option name = "selectedSectorIdString"
-                th:block
-                th:each="sectorDto : ${sectorList}"
-                th:text="${sectorDto.getSectorName()}"
-                th:value="${sectorDto.id}"
-                th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
-                >
-        </option>
+    <select multiple size="10" class="form-control" name = "selectedSectorIdString">
+        <optgroup
+                  th:each="sectorDto : ${parentSectorList}"
+                  th:label="${sectorDto.getSectorName()}"
+                  th:value="${sectorDto.id}">
+            <th:block th:field="${parentSectorList}">
+            <option name = "selectedSectorIdString"
+                    th:each="sectorDto : ${sectorDto.getSubSectors()}"
+                    th:text="${sectorDto.getSectorName()}"
+                    th:value="${sectorDto.id}"
+                    th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
+            >
+            </option>
+            </th:block>
+        </optgroup>
+
     </select>
 
     <br />
@@ -38,8 +45,8 @@ Sectors:
 
     <br />
     <br />
-    <input type="submit" id="addUser" name="action" value="addUser" placeholder="Add New User & Save Form"/>
-    <input type="submit" id="updateUser" name="action" value="updateUser" placeholder="Update Form Choices For Existing User"/>
+    <input type="submit" id="addUser" name="action" value="Add New User & Save Form"/>
+    <input type="submit" id="updateUser" name="action" value="Update Form Choices For Existing User"/>
 </form>
 </body>
 <script>

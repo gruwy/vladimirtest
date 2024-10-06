@@ -1,7 +1,6 @@
 package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
-
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
@@ -18,12 +17,14 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public void initIndex(Model model) {
         model.addAttribute("sectorList", sectorService.listSectors());
+        model.addAttribute("parentSectorList", sectorService.getParentSectors());
         model.addAttribute("userSectorList", "");
     }
 
     @Override
     public void refillIndex(Model model, UserDto userDto) {
         model.addAttribute("sectorList", sectorService.listSectors());
+        model.addAttribute("parentSectorList", sectorService.getParentSectors());
         model.addAttribute("userSectorList", userService.getUserSectorIdList(userDto));
     }
 

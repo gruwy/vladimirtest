@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SectorServiceImpl implements SectorService {
-//Convert methods to output DTO's
+
     private final SectorRepository sectorRepository;
     private final SectorMapper sectorMapper;
 
@@ -26,7 +26,7 @@ public class SectorServiceImpl implements SectorService {
     }
 
     @Override
-    public List<SectorDto> collectSectorsFromIdList(String selectedSectorIdString) {
+    public List<SectorEntity> collectSectorsFromIdList(String selectedSectorIdString) {
         List<String> sectorIdList = new ArrayList<>(Arrays.asList(selectedSectorIdString.split(",")));
         List<SectorEntity> sectorEntities = new ArrayList<>();
         for (String selectedSector : sectorIdList) {
@@ -34,19 +34,11 @@ public class SectorServiceImpl implements SectorService {
             sectorEntity.setId(Long.valueOf(selectedSector));
             sectorEntities.add(sectorEntity);
         }
-        var sectorEntityDtos = sectorMapper.toDto(sectorEntities);
-        return sectorEntityDtos;
-    }
-
-
-
-    @Override
-    public List<SectorEntity> findMainSectors() {
-        return sectorRepository.getSectorEntitiesByParentSectorIdNull();
+        return sectorEntities;
     }
 
     @Override
-    public List<SectorEntity> findSubSectors() {
-        return sectorRepository.getSectorEntitiesByParentSectorIdNotNull();
+    public List<SectorDto> getParentSectors() {
+        return sectorMapper.toDto(sectorRepository.getParentSectors());
     }
 }
