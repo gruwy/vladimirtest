@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.List;
 
 @Getter
@@ -24,7 +25,6 @@ public class UserDto {
     private String userName;
 
     @NotNull
-    //@AssertTrue
     private boolean agreedToTerms;
 
     private List<SectorEntity> sectors;

@@ -15,7 +15,7 @@ public interface UserService {
 
     Optional<UserDto> updateUser(Model model, String selectedSectorIdString, UserDto userDto);
 
-    Model refillUserData(Model model, UserDto userDto);
+    Model refillUserSectors(Model model, UserDto userDto);
 
     List<Long> getUserSectorIdList(UserDto userDto);
 

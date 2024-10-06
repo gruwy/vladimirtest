@@ -48,11 +48,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Model refillUserData(Model model, UserDto userDto) {
-        var user = getUserEntityByUserName(userDto);
+    public Model refillUserSectors(Model model, UserDto userDto) {
         var userSectors = getUserSectors(userDto);
         userDto.setSectors(userSectors);
-        userDto.setAgreedToTerms(user.get().isAgreedToTerms());
 
         model.addAttribute("userDto", userDto);
         return model;

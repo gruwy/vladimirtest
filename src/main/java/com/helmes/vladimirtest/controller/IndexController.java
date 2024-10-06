@@ -54,7 +54,7 @@ public class IndexController {
                 return "redirect:/";
             }
             case refill -> {
-                userService.refillUserData(model, userDto);
+                userService.refillUserSectors(model, userDto);
                 return refillIndex(model, userDto);
             }
             default -> {
