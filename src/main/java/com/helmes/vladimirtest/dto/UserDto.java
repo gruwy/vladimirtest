@@ -23,8 +23,8 @@ public class UserDto {
     private long id;
 
     @NotBlank(message = "Username is required!")
-    @Size(min= 3, message = "Username must have atleast 3 characters!")
-    @Size(max= 255, message = "Username can have have atmost 255 characters!")
+    @Size(min = 10, message = "Username must have atleast 10 characters!")
+    @Size(max = 255, message = "Username can have have atmost 255 characters!")
     private String userName;
 
     @AssertTrue(message = "Must agree to Terms!")
