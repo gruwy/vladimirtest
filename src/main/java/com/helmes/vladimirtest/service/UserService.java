@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface UserService {
 
-    UserDto saveUser(Model model, String selectedSectorIdString, UserDto userDto);
+    void saveUser(Model model, String selectedSectorIdString, UserDto userDto);
 
-    Optional<UserDto> updateUser(Model model, String selectedSectorIdString, UserDto userDto);
+    void updateUser(Model model, String selectedSectorIdString, UserDto userDto);
 
-    Model refillUserSectors(Model model, UserDto userDto);
+    void refillUserSectors(Model model, UserDto userDto);
 
     List<Long> getUserSectorIdList(UserDto userDto);
 

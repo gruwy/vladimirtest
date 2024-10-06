@@ -58,7 +58,7 @@ public class IndexController {
                 return refillIndex(model, userDto);
             }
             default -> {
-                return "";
+                return "redirect:/";
             }
         }
     }

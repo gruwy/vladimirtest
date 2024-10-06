@@ -25,35 +25,32 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDto saveUser(Model model, String selectedSectorIdString, UserDto userDto) {
+    public void saveUser(Model model, String selectedSectorIdString, UserDto userDto) {
         userDto.setSectors(sectorService.collectSectorsFromIdList(selectedSectorIdString));
         var user = userMapper.toEntity(userDto);
         userRepository.save(user);
         model.addAttribute("userDto", userDto);
-        return userDto;
     }
 
     @Transactional
     @Override
-    public Optional<UserDto> updateUser(Model model, String selectedSectorIdString, UserDto userDto) {
-        return getUserEntityByUserName(userDto).map(
+    public void updateUser(Model model, String selectedSectorIdString, UserDto userDto) {
+        getUserEntityByUserName(userDto).map(
                 userEntity -> {
                     userEntity.setSectors(sectorService.collectSectorsFromIdList(selectedSectorIdString));
                     var savedUser = userRepository.save(userEntity);
                     var dto = userMapper.toDto(savedUser);
                     model.addAttribute("userDto", dto);
-                    return dto;
+                    return userEntity;
                 }
         );
     }
 
     @Override
-    public Model refillUserSectors(Model model, UserDto userDto) {
+    public void refillUserSectors(Model model, UserDto userDto) {
         var userSectors = getUserSectors(userDto);
         userDto.setSectors(userSectors);
-
         model.addAttribute("userDto", userDto);
-        return model;
     }
 
     @Override
@@ -70,7 +67,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<SectorEntity> getUserSectors(UserDto userDto) {
         var user = getUserEntityByUserName(userDto);
-        return user.get().getSectors();
+        return user.orElse(null).getSectors();
     }
 
     @Override
