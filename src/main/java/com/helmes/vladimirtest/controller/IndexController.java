@@ -1,12 +1,18 @@
 package com.helmes.vladimirtest.controller;
 
+import com.helmes.vladimirtest.dto.ApiResponseDto;
 import com.helmes.vladimirtest.dto.UserDto;
+import com.helmes.vladimirtest.exception.IndexServiceLogicException;
+import com.helmes.vladimirtest.exception.UserAlreadyExistsException;
+import com.helmes.vladimirtest.exception.UserNotFoundException;
+import com.helmes.vladimirtest.exception.UserServiceLogicException;
 import com.helmes.vladimirtest.service.IndexService;
 import com.helmes.vladimirtest.service.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +33,14 @@ public class IndexController {
     private final String refill = "Refill Form";
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model) throws IndexServiceLogicException {
         indexService.initIndex(model);
         return "index";
     }
 
     @GetMapping("/refill")
     public String refillIndex(Model model,
-                              @Valid UserDto userDto) {
+                              @Valid UserDto userDto) throws IndexServiceLogicException {
         indexService.refillIndex(model, userDto);
         return "index";
     }
@@ -43,7 +49,7 @@ public class IndexController {
     public String execute (Model model,
                            @Param(value = "selectedSectorIdString") String selectedSectorIdString,
                            @RequestParam(value="action") String action,
-                           @Valid UserDto userDto) {
+                           @Valid UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException, UserNotFoundException, IndexServiceLogicException {
         switch (action) {
             case addUser -> {
                 userService.saveUser(model, selectedSectorIdString, userDto);

@@ -23,7 +23,7 @@ public class UserEntity {
     private String userName;
 
     @Column(name = "agreed_to_terms", nullable = false)
-    private boolean agreedToTerms;
+    private Boolean agreedToTerms;
 
     @ManyToMany
     @JoinTable(name = "user_sector", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "sector_id"))
