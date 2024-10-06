@@ -1,6 +1,5 @@
 package com.helmes.vladimirtest.controller;
 
-import com.helmes.vladimirtest.dto.ApiResponseDto;
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.exception.IndexServiceLogicException;
 import com.helmes.vladimirtest.exception.UserAlreadyExistsException;
@@ -12,7 +11,6 @@ import com.helmes.vladimirtest.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
