@@ -34,15 +34,18 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public ResponseEntity<ApiResponseDto<?>> saveUser(Model model, String selectedSectorIdString, UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException {
+    public ResponseEntity<ApiResponseDto<?>> saveUser(Model model, String selectedSectorList, UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException {
         try {
-            if (userRepository.findByUserName(userDto.getUserName()) != null){
+            System.out.println(userMapper.toEntity(userDto));
+            var user = userRepository.findByUserName(userDto.getUserName());
+            if (user != null){
                 throw new UserAlreadyExistsException("Registration failed: User already exists with username " + userDto.getUserName());
-            }
-            userDto.setSectors(sectorService.collectSectorsFromIdList(selectedSectorIdString));
-            var user = userMapper.toEntity(userDto);
+            } else user = new UserEntity();
+            var userSectorList = sectorService.collectSectorsFromIdList(selectedSectorList);
+            user.setUserName(userDto.getUserName());
+            user.setSectors(userSectorList);
+            user.setAgreedToTerms(userDto.getAgreedToTerms());
             userRepository.save(user);
-            model.addAttribute("userDto", userDto);
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -58,14 +61,13 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public ResponseEntity<ApiResponseDto<?>> updateUser(Model model, String selectedSectorIdString, UserDto userDto) throws UserNotFoundException, UserServiceLogicException {
+    public ResponseEntity<ApiResponseDto<?>> updateUser(Model model, String selectedSectorList, UserDto userDto) throws UserNotFoundException, UserServiceLogicException {
         try {
-            getUserEntityByUserName(userDto).map(
+            Optional<UserEntity> user = Optional.of(userRepository.findByUserName(userDto.getUserName()));
+            user.map(
                     userEntity -> {
-                        userEntity.setSectors(sectorService.collectSectorsFromIdList(selectedSectorIdString));
-                        var savedUser = userRepository.save(userEntity);
-                        var dto = userMapper.toDto(savedUser);
-                        model.addAttribute("userDto", dto);
+                        userEntity.setSectors(sectorService.collectSectorsFromIdList(selectedSectorList));
+                        model.addAttribute("userDto", userMapper.toDto(userRepository.save(userEntity)));
                         return userEntity;
                     }
             ).orElseThrow(() -> new UserNotFoundException("User not found with name " + userDto.getUserName()));
@@ -85,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> refillUserSectors(Model model, UserDto userDto) throws UserServiceLogicException {
         try {
-            var userSectors = getUserSectors(userDto);
+            var userSectors = userRepository.findByUserName(userDto.getUserName()).getSectors();
             userDto.setSectors(userSectors);
             model.addAttribute("userDto", userDto);
 
@@ -101,7 +103,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Long> getUserSectorIdList(UserDto userDto) {
-        var userSectors = getUserSectors(userDto);
+        var userSectors = userRepository.findByUserName(userDto.getUserName()).getSectors();
         List<Long> userSectorIdList = new ArrayList<>();
         for (SectorEntity sectorEntity : userSectors) {
             var sectorId = sectorEntity.getId();
@@ -110,16 +112,4 @@ public class UserServiceImpl implements UserService {
         return userSectorIdList;
     }
 
-    //Recheck
-    @Override
-    public List<SectorEntity> getUserSectors(UserDto userDto) {
-        var user = getUserEntityByUserName(userDto);
-        return user.orElse(null).getSectors();
-    }
-
-
-    @Override
-    public Optional<UserEntity> getUserEntityByUserName(UserDto userDto) {
-        return userRepository.findById(userRepository.findUserIdByUserName(userDto.getUserName()));
-    }
 }

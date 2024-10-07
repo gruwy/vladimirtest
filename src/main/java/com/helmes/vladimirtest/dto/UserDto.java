@@ -23,7 +23,7 @@ public class UserDto {
     private long id;
 
     @NotBlank(message = "Username is required!")
-    @Size(min = 10, message = "Username must have atleast 10 characters!")
+    @Size(min = 1, message = "Username must have atleast 10 characters!")
     @Size(max = 255, message = "Username can have have atmost 255 characters!")
     private String userName;
 
@@ -31,4 +31,6 @@ public class UserDto {
     private Boolean agreedToTerms;
 
     private List<SectorEntity> sectors;
+
+    private String selectedSectorIdString;
 }

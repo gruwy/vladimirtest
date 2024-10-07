@@ -21,7 +21,7 @@ Name:
 Sectors:
 
 <br />
-    <select multiple size="10" class="form-control" name = "selectedSectorIdString">
+    <select multiple size="10" class="form-control" name = "selectedSectorList">
         <optgroup
                   th:each="sectorDto : ${parentSectorList}"
                   th:label="${sectorDto.getSectorName()}"

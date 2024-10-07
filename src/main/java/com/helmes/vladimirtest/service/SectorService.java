@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface SectorService {
 
-    List<SectorDto> listSectors();
-
     List<SectorEntity> collectSectorsFromIdList(String selectedSectorIdString);
 
     List<SectorDto> getParentSectors();

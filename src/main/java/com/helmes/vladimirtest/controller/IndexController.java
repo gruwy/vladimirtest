@@ -1,10 +1,7 @@
 package com.helmes.vladimirtest.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
-import com.helmes.vladimirtest.exception.IndexServiceLogicException;
-import com.helmes.vladimirtest.exception.UserAlreadyExistsException;
-import com.helmes.vladimirtest.exception.UserNotFoundException;
-import com.helmes.vladimirtest.exception.UserServiceLogicException;
+import com.helmes.vladimirtest.exception.*;
 import com.helmes.vladimirtest.service.IndexService;
 import com.helmes.vladimirtest.service.UserService;
 
@@ -31,30 +28,30 @@ public class IndexController {
     private final String refill = "Refill Form";
 
     @GetMapping("/")
-    public String index(Model model) throws IndexServiceLogicException {
+    public String index(Model model) throws IndexInitException {
         indexService.initIndex(model);
         return "index";
     }
 
     @GetMapping("/refill")
     public String refillIndex(Model model,
-                              @Valid UserDto userDto) throws IndexServiceLogicException {
+                              @Valid UserDto userDto) throws IndexRefillException {
         indexService.refillIndex(model, userDto);
         return "index";
     }
 
     @PostMapping("/execute")
     public String execute (Model model,
-                           @Param(value = "selectedSectorIdString") String selectedSectorIdString,
+                           @Param(value = "selectedSectorList") String selectedSectorList,
                            @RequestParam(value="action") String action,
-                           @Valid UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException, UserNotFoundException, IndexServiceLogicException {
+                           @Valid UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException, UserNotFoundException, IndexRefillException {
         switch (action) {
             case addUser -> {
-                userService.saveUser(model, selectedSectorIdString, userDto);
+                userService.saveUser(model, selectedSectorList, userDto);
                 return "redirect:/";
             }
             case updateUser -> {
-                userService.updateUser(model, selectedSectorIdString, userDto);
+                userService.updateUser(model, selectedSectorList, userDto);
                 return "redirect:/";
             }
             case refill -> {

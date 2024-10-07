@@ -20,12 +20,6 @@ public class SectorServiceImpl implements SectorService {
     private final SectorMapper sectorMapper;
 
     @Override
-    public List<SectorDto> listSectors() {
-        var sectors = sectorRepository.findAll();
-        return sectorMapper.toDto(sectors);
-    }
-
-    @Override
     public List<SectorEntity> collectSectorsFromIdList(String selectedSectorIdString) {
         List<String> sectorIdList = new ArrayList<>(Arrays.asList(selectedSectorIdString.split(",")));
         List<SectorEntity> sectorEntities = new ArrayList<>();

@@ -9,8 +9,6 @@ import java.util.List;
 
 @Repository
 public interface SectorRepository extends JpaRepository<SectorEntity, Long> {
-
-    @Query("SELECT s from sector s where s.id in (select distinct s.parentSector.id from sector s)")
+    @Query("SELECT s FROM sector s JOIN sector ps ON s.id = ps.parentSector.id")
     List<SectorEntity> getParentSectors();
-
 }
