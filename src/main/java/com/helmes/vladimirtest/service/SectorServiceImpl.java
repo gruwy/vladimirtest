@@ -20,8 +20,8 @@ public class SectorServiceImpl implements SectorService {
     private final SectorMapper sectorMapper;
 
     @Override
-    public List<SectorEntity> collectSectorsFromIdList(String selectedSectorIdString) {
-        List<String> sectorIdList = new ArrayList<>(Arrays.asList(selectedSectorIdString.split(",")));
+    public List<SectorEntity> collectSectorsFromIdList(String selectedSectorList) {
+        List<String> sectorIdList = new ArrayList<>(Arrays.asList(selectedSectorList.split(",")));
         List<SectorEntity> sectorEntities = new ArrayList<>();
         for (String selectedSector : sectorIdList) {
             SectorEntity sectorEntity = new SectorEntity();

@@ -36,7 +36,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> saveUser(Model model, String selectedSectorList, UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException {
         try {
-            System.out.println(userMapper.toEntity(userDto));
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user != null){
                 throw new UserAlreadyExistsException("Registration failed: User already exists with username " + userDto.getUserName());
