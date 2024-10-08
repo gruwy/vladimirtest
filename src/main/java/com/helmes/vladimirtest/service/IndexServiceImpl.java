@@ -23,7 +23,7 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> initIndex(Model model) throws IndexInitException {
         try {
-            model.addAttribute("parentSectorList", sectorService.getParentSectors());
+            sectorService.listSectors(model);
             model.addAttribute("userSectorList", "");
 
             return ResponseEntity
@@ -39,7 +39,7 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> refillIndex(Model model, UserDto userDto) throws IndexRefillException {
         try {
-            model.addAttribute("parentSectorList", sectorService.getParentSectors());
+            sectorService.listSectors(model);
             model.addAttribute("userSectorList", userService.getUserSectorIdList(userDto));
 
             return ResponseEntity

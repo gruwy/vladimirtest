@@ -1,18 +1,24 @@
 package com.helmes.vladimirtest.service;
 
-import com.helmes.vladimirtest.dto.SectorDto;
+import com.helmes.vladimirtest.dto.ApiResponseDto;
+import com.helmes.vladimirtest.dto.ApiResponseStatus;
 import com.helmes.vladimirtest.entity.SectorEntity;
+import com.helmes.vladimirtest.exception.SectorServiceLogicException;
 import com.helmes.vladimirtest.mapper.SectorMapper;
 import com.helmes.vladimirtest.repository.SectorRepository;
-
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SectorServiceImpl implements SectorService {
 
@@ -32,7 +38,21 @@ public class SectorServiceImpl implements SectorService {
     }
 
     @Override
-    public List<SectorDto> getParentSectors() {
-        return sectorMapper.toDto(sectorRepository.getParentSectors());
+    public ResponseEntity<ApiResponseDto<?>> listSectors(Model model) throws SectorServiceLogicException {
+        try {
+            var sectorList = sectorRepository.findAll();
+            var parentSectorList = sectorRepository.getParentSectors();
+
+            model.addAttribute("parentSectorList", sectorMapper.toDto(parentSectorList));
+            model.addAttribute("sectorList", sectorMapper.toDto(sectorList));
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), "Sectors fetched successfully!")
+                    );
+        } catch (Exception e) {
+            log.error("Failed to fetch sectors with exception: {}", e.getMessage());
+            throw new SectorServiceLogicException(e.getMessage());
+        }
     }
 }

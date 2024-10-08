@@ -21,23 +21,37 @@ Name:
 Sectors:
 
 <br />
-    <select multiple size="10" class="form-control" name = "selectedSectorList">
-        <optgroup
-                  th:each="sectorDto : ${parentSectorList}"
-                  th:label="${sectorDto.getSectorName()}"
-                  th:value="${sectorDto.id}">
-            <th:block th:field="${parentSectorList}">
-            <option name = "selectedSectorIdString"
-                    th:each="sectorDto : ${sectorDto.getSubSectors()}"
-                    th:text="${sectorDto.getSectorName()}"
-                    th:value="${sectorDto.id}"
-                    th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
-            >
-            </option>
-            </th:block>
-        </optgroup>
+    <div th:if="${not #lists.isEmpty(parentSectorList)}">
+        <select multiple size="10" class="form-control" name = "selectedSectorList">
+            <optgroup
+                    th:each="sectorDto : ${parentSectorList}"
+                    th:label="${sectorDto.getSectorName()}"
+                    th:value="${sectorDto.id}">
+                <th:block th:field="${parentSectorList}">
+                    <option name = "selectedSectorIdString"
+                            th:each="sectorDto : ${sectorDto.getSubSectors()}"
+                            th:text="${sectorDto.getSectorName()}"
+                            th:value="${sectorDto.id}"
+                            th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
+                    >
+                    </option>
+                </th:block>
+            </optgroup>
+        </select>
+    </div>
 
-    </select>
+    <div th:if="${#lists.isEmpty(parentSectorList)}">
+        <select multiple size="10" class="form-control" name = "selectedSectorList">
+                    <option name = "selectedSectorIdString"
+                            th:each="sectorDto : ${sectorList}"
+                            th:text="${sectorDto.getSectorName()}"
+                            th:value="${sectorDto.id}"
+                            th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
+                    >
+                    </option>
+            </optgroup>
+        </select>
+    </div>
 
     <br />
     <br />

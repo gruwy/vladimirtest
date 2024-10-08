@@ -31,6 +31,4 @@ public class UserDto {
     private Boolean agreedToTerms;
 
     private List<SectorEntity> sectors;
-
-    private String selectedSectorIdString;
 }

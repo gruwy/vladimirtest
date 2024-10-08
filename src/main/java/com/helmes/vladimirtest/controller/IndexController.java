@@ -44,7 +44,8 @@ public class IndexController {
     public String execute (Model model,
                            @Param(value = "selectedSectorList") String selectedSectorList,
                            @RequestParam(value="action") String action,
-                           @Valid UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException, UserNotFoundException, IndexRefillException {
+                           @Valid UserDto userDto)
+                           throws UserAlreadyExistsException, UserServiceLogicException, UserNotFoundException, IndexRefillException, NoSectorsChosenException {
         switch (action) {
             case addUser -> {
                 userService.saveUser(model, selectedSectorList, userDto);
