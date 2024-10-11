@@ -32,14 +32,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<ApiResponseDto<?>> saveUser(Model model, String selectedSectorList, UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException, NoSectorsChosenException {
         try {
+            if (selectedSectorList == null) {
+                throw new NoSectorsChosenException("Failed to create user with exception: No sectors chosen by the user.");
+            }
+
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user != null) {
                 throw new UserAlreadyExistsException("Failed to create user with exception: User already exists with name " + userDto.getUserName());
             } else user = new UserEntity();
-
-            if (selectedSectorList == null) {
-                throw new NoSectorsChosenException("Failed to create user with exception: No sectors chosen by the user.");
-            }
 
             var userSectorList = sectorService.collectSectorsFromIdList(selectedSectorList);
             user.setUserName(userDto.getUserName());
