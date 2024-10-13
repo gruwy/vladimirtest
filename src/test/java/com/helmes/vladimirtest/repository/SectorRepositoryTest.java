@@ -16,7 +16,7 @@ class SectorRepositoryTest {
     private SectorRepository sectorRepository;
 
     @Test
-    void getParentSectors() {
+    void getParentSectors_ReturnsParentSectors() {
         assertInstanceOf(List.class, sectorRepository.getParentSectors());
         assertNotNull(sectorRepository.getParentSectors());
     }

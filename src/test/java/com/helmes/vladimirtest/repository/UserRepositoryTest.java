@@ -33,12 +33,12 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void findNewUserByUserName_notNull() {
+    public void findNewUserByUserName_findsUserByUserName() {
         assertNotNull(userRepository.findByUserName("TestUser"));
     }
 
     @Test
-    public void findNewUserByUserName_Null() {
+    public void findNewUserByUserName_doesntFindUserByUserName() {
         assertNull(userRepository.findByUserName("Test_User"));
     }
 }
