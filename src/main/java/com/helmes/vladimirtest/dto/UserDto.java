@@ -23,7 +23,7 @@ public class UserDto {
     private long id;
 
     @NotBlank(message = "Username is required!")
-    @Size(min = 1, message = "Username must have atleast 10 characters!")
+    @Size(min = 1, message = "Username must have atleast 1 character!")
     @Size(max = 255, message = "Username can have have atmost 255 characters!")
     private String userName;
 

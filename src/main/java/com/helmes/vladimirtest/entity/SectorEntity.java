@@ -17,8 +17,8 @@ import java.util.List;
 public class SectorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vladimirtest.sector_id_seq")
-    @SequenceGenerator(name = "vladimirtest.sector_id_seq", sequenceName = "vladimirtest.sector_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sector_id_seq")
+    @SequenceGenerator(name = "sector_id_seq", sequenceName = "sector_id_seq", allocationSize = 1)
     @Column(name = "id")
     private Long id;
 

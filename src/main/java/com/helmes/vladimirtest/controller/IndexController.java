@@ -1,10 +1,8 @@
 package com.helmes.vladimirtest.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
-import com.helmes.vladimirtest.exception.*;
 import com.helmes.vladimirtest.service.IndexService;
 import com.helmes.vladimirtest.service.UserService;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -28,14 +26,14 @@ public class IndexController {
     private final String refill = "Refill Form";
 
     @GetMapping("/")
-    public String index(Model model) throws IndexInitException {
+    public String index(Model model) throws Exception {
         indexService.initIndex(model);
         return "index";
     }
 
     @GetMapping("/refill")
     public String refillIndex(Model model,
-                              @Valid UserDto userDto) throws IndexRefillException {
+                              @Valid UserDto userDto) throws Exception {
         indexService.refillIndex(model, userDto);
         return "index";
     }
@@ -45,18 +43,17 @@ public class IndexController {
                            @Param(value = "selectedSectorList") String selectedSectorList,
                            @RequestParam(value="action") String action,
                            @Valid UserDto userDto)
-                           throws UserAlreadyExistsException, UserServiceLogicException, UserNotFoundException, IndexRefillException, NoSectorsChosenException {
+                           throws Exception {
         switch (action) {
             case addUser -> {
-                userService.saveUser(model, selectedSectorList, userDto);
+                userService.saveUser(selectedSectorList, userDto);
                 return "redirect:/";
             }
             case updateUser -> {
-                userService.updateUser(model, selectedSectorList, userDto);
+                userService.updateUser(selectedSectorList, userDto);
                 return "redirect:/";
             }
             case refill -> {
-                userService.refillUserSectors(model, userDto);
                 return refillIndex(model, userDto);
             }
             default -> {

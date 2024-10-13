@@ -49,6 +49,7 @@ public class SchemaInit {
                  Statement statement = conn.createStatement()) {
                 log.info("Going to create DB schema '{}' if not exists.", schemaName);
                 statement.execute("create schema if not exists " + schemaName);
+                log.info("DB schema '{}' created.", schemaName);
             } catch (SQLException e) {
                 throw new RuntimeException("Failed to create schema '" + schemaName + "'", e);
             }

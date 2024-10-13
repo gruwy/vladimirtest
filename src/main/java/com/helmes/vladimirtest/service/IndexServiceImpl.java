@@ -3,8 +3,6 @@ package com.helmes.vladimirtest.service;
 import com.helmes.vladimirtest.dto.ApiResponseDto;
 import com.helmes.vladimirtest.dto.ApiResponseStatus;
 import com.helmes.vladimirtest.dto.UserDto;
-import com.helmes.vladimirtest.exception.IndexInitException;
-import com.helmes.vladimirtest.exception.IndexRefillException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +21,7 @@ public class IndexServiceImpl implements IndexService {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<ApiResponseDto<?>> initIndex(Model model) throws IndexInitException {
+    public ResponseEntity<ApiResponseDto<?>> initIndex(Model model) throws Exception {
         try {
             sectorService.listSectors(model);
             model.addAttribute("userSectorList", "");
@@ -34,12 +32,12 @@ public class IndexServiceImpl implements IndexService {
                     );
         } catch (Exception e) {
             log.error("Failed to initialize index with exception {}", e.getMessage());
-            throw new IndexInitException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public ResponseEntity<ApiResponseDto<?>> refillIndex(Model model, UserDto userDto) throws IndexRefillException {
+    public ResponseEntity<ApiResponseDto<?>> refillIndex(Model model, UserDto userDto) throws Exception {
         try {
             sectorService.listSectors(model);
             model.addAttribute("userSectorList", userService.getUserSectorIdList(userDto));
@@ -50,7 +48,7 @@ public class IndexServiceImpl implements IndexService {
                     );
         } catch (Exception e) {
             log.error("Failed to refill index with exception {}", e.getMessage());
-            throw new IndexRefillException(e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 }

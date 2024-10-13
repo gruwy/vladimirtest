@@ -3,7 +3,6 @@ package com.helmes.vladimirtest.service;
 import com.helmes.vladimirtest.dto.ApiResponseDto;
 import com.helmes.vladimirtest.dto.ApiResponseStatus;
 import com.helmes.vladimirtest.entity.SectorEntity;
-import com.helmes.vladimirtest.exception.SectorServiceLogicException;
 import com.helmes.vladimirtest.mapper.SectorMapper;
 import com.helmes.vladimirtest.repository.SectorRepository;
 import jakarta.transaction.Transactional;
@@ -40,7 +39,7 @@ public class SectorServiceImpl implements SectorService {
     }
 
     @Override
-    public ResponseEntity<ApiResponseDto<?>> listSectors(Model model) throws SectorServiceLogicException {
+    public ResponseEntity<ApiResponseDto<?>> listSectors(Model model) throws Exception {
         try {
             var sectorList = sectorRepository.findAll();
             var parentSectorList = sectorRepository.getParentSectors();
@@ -50,11 +49,11 @@ public class SectorServiceImpl implements SectorService {
 
             return ResponseEntity
                     .status(HttpStatus.OK)
-                    .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), "Sectors fetched successfully!")
+                    .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), "Sectors listed successfully!")
                     );
         } catch (Exception e) {
-            log.error("Failed to fetch sectors with exception: {}", e.getMessage());
-            throw new SectorServiceLogicException(e.getMessage());
+            log.error("Failed to list sectors with exception: {}", e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 }
