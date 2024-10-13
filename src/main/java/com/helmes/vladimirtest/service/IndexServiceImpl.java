@@ -5,6 +5,7 @@ import com.helmes.vladimirtest.dto.ApiResponseStatus;
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.exception.IndexInitException;
 import com.helmes.vladimirtest.exception.IndexRefillException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class IndexServiceImpl implements IndexService {
 

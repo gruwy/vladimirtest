@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Vladimir Semjonov" id="1728587504187-1">
+        <createTable tableName="user">
+            <column name="agreed_to_terms" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_pkey"/>
+            </column>
+            <column name="user_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-2">
+        <addUniqueConstraint columnNames="user_name" constraintName="user_user_name_key" tableName="user"/>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-3">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="sector_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-4">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="user_id_seq" startValue="1"/>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-5">
+        <createTable tableName="sector">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="sector_pkey"/>
+            </column>
+            <column name="parent_sector_id" type="BIGINT"/>
+            <column name="sector_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-6">
+        <createTable tableName="user_sector">
+            <column name="sector_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-7">
+        <addForeignKeyConstraint baseColumnNames="sector_id" baseTableName="user_sector" constraintName="fkajjtoc3nwpa9dhcy720g3bgxs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="sector" validate="true"/>
+    </changeSet>
+    <changeSet author="Vladimir Semjonov" id="1728587504187-8">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_sector" constraintName="fkot4oeus7wpkmfpmi23ugbect4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

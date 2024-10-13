@@ -6,6 +6,7 @@ import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.exception.SectorServiceLogicException;
 import com.helmes.vladimirtest.mapper.SectorMapper;
 import com.helmes.vladimirtest.repository.SectorRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class SectorServiceImpl implements SectorService {
 

@@ -21,6 +21,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -28,7 +29,6 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final SectorService sectorService;
 
-    @Transactional
     @Override
     public ResponseEntity<ApiResponseDto<?>> saveUser(Model model, String selectedSectorList, UserDto userDto) throws UserAlreadyExistsException, UserServiceLogicException, NoSectorsChosenException {
         try {
@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Transactional
     @Override
     public ResponseEntity<ApiResponseDto<?>> updateUser(Model model, String selectedSectorList, UserDto userDto) throws UserNotFoundException, UserServiceLogicException {
         try {

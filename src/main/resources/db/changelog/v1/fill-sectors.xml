@@ -1,0 +1,400 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="Vladimir Semjonov" id="sector_data">
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' value='NULL' />
+            <column name='sector_name' value='Manufacturing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' value='NULL' />
+            <column name='sector_name' value='Other' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' value='NULL' />
+            <column name='sector_name' value='Service' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Construction materials' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Electronics and Optics' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Food and Beverage' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Food and Beverage')" />
+            <column name='sector_name' value='Bakery &amp; confectionery products' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Food and Beverage')" />
+            <column name='sector_name' value='Beverages' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Food and Beverage')" />
+            <column name='sector_name' value='Fish &amp; fish products' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Food and Beverage')" />
+            <column name='sector_name' value='Meat &amp; meat products' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Food and Beverage')" />
+            <column name='sector_name' value='Milk &amp; dairy products' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Food and Beverage')" />
+            <column name='sector_name' value='Other (Food and Beverage)' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Furniture' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Bathroom/sauna' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Bedroom' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Children’s room' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Kitchen' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Living room' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Office' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Other (Furniture)' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Outdoor' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Furniture')" />
+            <column name='sector_name' value='Project furniture' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Machinery' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Machinery components' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Machinery equipment/tools' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Manufacture of machinery' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Maritime' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Maritime')" />
+            <column name='sector_name' value='Aluminium and steel workboats' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Maritime')" />
+            <column name='sector_name' value='Boat/Yacht building' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Maritime')" />
+            <column name='sector_name' value='Ship repair and conversion' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Maritime')" />
+            <column name='sector_name' value='Ship repair and conversion' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Metal structures' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Other (Machinery)' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Machinery')" />
+            <column name='sector_name' value='Repair and maintenance service' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Metalworking' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metalworking')" />
+            <column name='sector_name' value='Construction of metal structures' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metalworking')" />
+            <column name='sector_name' value='Houses and buildings' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metalworking')" />
+            <column name='sector_name' value='Metal products' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metalworking')" />
+            <column name='sector_name' value='Metal works' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metal works')" />
+            <column name='sector_name' value='CNC-machining' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metal works')" />
+            <column name='sector_name' value='Forgings, Fasteners' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metal works')" />
+            <column name='sector_name' value='Gas, Plasma, Laser cutting' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Metal works')" />
+            <column name='sector_name' value='MIG, TIG, Aluminum welding' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Plastic and Rubber' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic and Rubber')" />
+            <column name='sector_name' value='Packaging' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic and Rubber')" />
+            <column name='sector_name' value='Plastic goods' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic and Rubber')" />
+            <column name='sector_name' value='Plastic processing technology' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic processing technology')" />
+            <column name='sector_name' value='Blowing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic processing technology')" />
+            <column name='sector_name' value='Moulding' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic processing technology')" />
+            <column name='sector_name' value='Plastics welding and processing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Plastic goods')" />
+            <column name='sector_name' value='Plastic profiles' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Printing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Printing')" />
+            <column name='sector_name' value='Advertising' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Printing')" />
+            <column name='sector_name' value='Book/Periodicals printing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Printing')" />
+            <column name='sector_name' value='Labelling and packaging printing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Textile and Clothing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Textile and Clothing')" />
+            <column name='sector_name' value='Clothing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Textile and Clothing')" />
+            <column name='sector_name' value='Textile' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Manufacturing')" />
+            <column name='sector_name' value='Wood' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Wood')" />
+            <column name='sector_name' value='Other (Wood)' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Wood')" />
+            <column name='sector_name' value='Wooden building materials' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Wood')" />
+            <column name='sector_name' value='Wooden houses' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Other')" />
+            <column name='sector_name' value='Creative industries' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Other')" />
+            <column name='sector_name' value='Energy technology' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Other')" />
+            <column name='sector_name' value='Environment' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Service')" />
+            <column name='sector_name' value='Business services' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Service')" />
+            <column name='sector_name' value='Engineering' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Service')" />
+            <column name='sector_name' value='Information Technology and Telecommunications' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Service')" />
+            <column name='sector_name' value='Tourism' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Service')" />
+            <column name='sector_name' value='Translation services' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Service')" />
+            <column name='sector_name' value='Transport and Logistics' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Information Technology and Telecommunications')" />
+            <column name='sector_name' value='Data processing, Web portals, E-marketing' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Information Technology and Telecommunications')" />
+            <column name='sector_name' value='Programming, Consultancy' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Information Technology and Telecommunications')" />
+            <column name='sector_name' value='Software, Hardware' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Information Technology and Telecommunications')" />
+            <column name='sector_name' value='Telecommunications' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Transport and Logistics')" />
+            <column name='sector_name' value='Air' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Transport and Logistics')" />
+            <column name='sector_name' value='Rail' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Transport and Logistics')" />
+            <column name='sector_name' value='Road' />
+        </insert>
+        <insert tableName="sector">
+            <column name='id' valueSequenceNext='sector_id_seq' />
+            <column name='parent_sector_id' valueComputed="(select id from vladimirtest.sector where sector_name='Transport and Logistics')" />
+            <column name='sector_name' value='Water' />
+        </insert>
+    </changeSet>
+</databaseChangeLog>
