@@ -22,19 +22,15 @@ public class UserServiceTest {
     @InjectMocks
     private UserServiceImpl userService;
 
-    private UserDto userDto;
-
-    private String selectedSectorList;
-
-    private UserMapper userMapper = new UserMapperImpl();
+    private final UserMapper userMapper = new UserMapperImpl();
 
 
     @BeforeEach
     void setUp() {
-        userDto = new UserDto();
+        UserDto userDto = new UserDto();
         userDto.setUserName("TestUser");
         userDto.setAgreedToTerms(true);
-        selectedSectorList = "1,2,3,4";
+        String selectedSectorList = "1,2,3,4";
         userRepository.save(userMapper.toEntity(userDto));
     }
 
