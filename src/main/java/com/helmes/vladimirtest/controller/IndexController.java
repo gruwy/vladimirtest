@@ -6,6 +6,8 @@ import com.helmes.vladimirtest.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,38 +28,38 @@ public class IndexController {
     private final String refill = "Refill Form";
 
     @GetMapping("/")
-    public String index(Model model) throws Exception {
+    public ResponseEntity<String> index(Model model) throws Exception {
         indexService.initIndex(model);
-        return "index";
+        return new ResponseEntity<>("index", HttpStatus.OK);
     }
 
     @GetMapping("/refill")
-    public String refillIndex(Model model,
+    public ResponseEntity<String> refillIndex(Model model,
                               @Valid UserDto userDto) throws Exception {
         indexService.refillIndex(model, userDto);
-        return "index";
+        return new ResponseEntity<>("index", HttpStatus.OK);
     }
 
     @PostMapping("/execute")
-    public String execute (Model model,
-                           @Param(value = "selectedSectorList") String selectedSectorList,
-                           @RequestParam(value="action") String action,
-                           @Valid UserDto userDto)
-                           throws Exception {
+    public ResponseEntity<String> execute (Model model,
+                                           @Param(value = "selectedSectorList") String selectedSectorList,
+                                           @RequestParam(value="action") String action,
+                                           @Valid UserDto userDto) throws Exception {
         switch (action) {
             case addUser -> {
                 userService.saveUser(selectedSectorList, userDto);
-                return "redirect:/";
+                return new ResponseEntity<>("\"redirect:/\"", HttpStatus.CREATED);
             }
             case updateUser -> {
                 userService.updateUser(selectedSectorList, userDto);
-                return "redirect:/";
+                return new ResponseEntity<>("\"redirect:/\"", HttpStatus.OK);
             }
             case refill -> {
-                return refillIndex(model, userDto);
+                refillIndex(model, userDto);
+                return new ResponseEntity<>("", HttpStatus.OK);
             }
             default -> {
-                return "redirect:/";
+                return new ResponseEntity<>("\"redirect:/\"", HttpStatus.OK);
             }
         }
     }

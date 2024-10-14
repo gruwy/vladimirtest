@@ -2,29 +2,30 @@ package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.mapper.UserMapper;
+import com.helmes.vladimirtest.mapper.UserMapperImpl;
 import com.helmes.vladimirtest.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.ui.Model;
 
 @SpringBootTest
 public class UserServiceTest {
 
-    @Autowired
+    @Mock
     private UserRepository userRepository;
 
-    private UserService userService;
+    @InjectMocks
+    private UserServiceImpl userService;
 
     private UserDto userDto;
 
     private String selectedSectorList;
 
-    private UserMapper userMapper;
+    private UserMapper userMapper = new UserMapperImpl();
 
-    private Model model;
 
     @BeforeEach
     void setUp() {
@@ -40,10 +41,12 @@ public class UserServiceTest {
         userRepository.deleteAll();
     }
 
-    @Test
-    void saveUser_shouldReturnUserNotFoundException() throws Exception {
-        var user = userRepository.findByUserName("FailUser");
-    }
+    /*@Test
+    void saveUser_shouldReturnException_selectedSectorsNotFound() throws Exception {
+        selectedSectorList = "";
+        var apiResponseDtoResponseEntity = userService.saveUser(selectedSectorList, userDto);
+        assertEquals(ApiResponseStatus.FAIL, apiResponseDtoResponseEntity.getStatusCode());
+    }*/
 
     @Test
     void updateUser() {

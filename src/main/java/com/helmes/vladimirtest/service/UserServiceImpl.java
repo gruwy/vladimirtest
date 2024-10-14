@@ -1,32 +1,31 @@
 package com.helmes.vladimirtest.service;
 
-import com.helmes.vladimirtest.dto.ApiResponseDto;
-import com.helmes.vladimirtest.dto.ApiResponseStatus;
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.entity.UserEntity;
+import com.helmes.vladimirtest.mapper.UserMapper;
 import com.helmes.vladimirtest.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
 @Transactional
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final SectorService sectorService;
+    private UserMapper userMapper;
 
     @Override
-    public ResponseEntity<ApiResponseDto<?>> saveUser(String selectedSectorList, UserDto userDto) throws Exception {
+    public UserDto saveUser(String selectedSectorList, UserDto userDto) throws Exception {
         try {
             if (selectedSectorList == null) {
                 throw new Exception("Failed to create user with exception: No sectors chosen by the user");
@@ -41,11 +40,9 @@ public class UserServiceImpl implements UserService {
             user.setUserName(userDto.getUserName());
             user.setSectors(userSectorList);
             user.setAgreedToTerms(userDto.getAgreedToTerms());
-            userRepository.save(user);
+            var savedUser = userRepository.save(user);
+            return userMapper.toDto(savedUser);
 
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), "User has been successfully created!"));
         }  catch (Exception e) {
             log.error("Failed to create user with exception: {}", e.getMessage());
             throw new Exception(e.getMessage());
@@ -54,7 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<ApiResponseDto<?>> updateUser(String selectedSectorList, UserDto userDto) throws Exception {
+    public Optional<UserDto> updateUser(String selectedSectorList, UserDto userDto) throws Exception {
         try {
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user == null) {
@@ -63,13 +60,10 @@ public class UserServiceImpl implements UserService {
             if (selectedSectorList == null) {
                 throw new Exception("Failed to update user with exception: No sectors chosen by the user.");
             }
-
             user.setSectors(sectorService.collectSectorsFromIdList(selectedSectorList));
+            var savedUser = userRepository.save(user);
+            return Optional.of(userMapper.toDto(savedUser));
 
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(new ApiResponseDto<>(ApiResponseStatus.SUCCESS.name(), "User updated successfully!")
-                    );
         } catch(Exception e) {
             log.error("Failed to update user {} with exception {}", userDto.getUserName(), e.getMessage());
             throw new Exception(e.getMessage());
@@ -78,9 +72,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Long> getUserSectorIdList(UserDto userDto) throws Exception {
+        try {
         var user = userRepository.findByUserName(userDto.getUserName());
         if (user == null) {
-            throw new Exception("Failed to get user sector id list user with exception: User not found with name " + userDto.getUserName());
+            throw new Exception("Failed to get user sector id list with exception: User not found with name " + userDto.getUserName());
         }
         var userSectors = user.getSectors();
         if (userSectors.isEmpty()) {
@@ -94,6 +89,10 @@ public class UserServiceImpl implements UserService {
         }
 
         return userSectorIdList;
+        } catch(Exception e) {
+            log.error("Failed to get user {} sector id list with exception {}", userDto.getUserName(), e.getMessage());
+            throw new Exception(e.getMessage());
+        }
     }
 
 }
