@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-@Transactional
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -24,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final SectorService sectorService;
     private UserMapper userMapper;
 
+    @Transactional
     @Override
     public UserDto saveUser(String selectedSectorList, UserDto userDto) throws Exception {
         try {
@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Transactional
     @Override
     public Optional<UserDto> updateUser(String selectedSectorList, UserDto userDto) throws Exception {
         try {

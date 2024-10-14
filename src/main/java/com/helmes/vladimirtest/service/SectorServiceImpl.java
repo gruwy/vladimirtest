@@ -15,7 +15,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor
 public class SectorServiceImpl implements SectorService {
 
@@ -35,15 +34,13 @@ public class SectorServiceImpl implements SectorService {
     }
 
     @Override
-    public Model listSectors(Model model) throws Exception {
+    public void listSectors(Model model) throws Exception {
         try {
             var sectorList = sectorRepository.findAll();
             var parentSectorList = sectorRepository.getParentSectors();
 
             model.addAttribute("parentSectorList", sectorMapper.toDto(parentSectorList));
             model.addAttribute("sectorList", sectorMapper.toDto(sectorList));
-
-            return model;
         } catch (Exception e) {
             log.error("Failed to list sectors with exception: {}", e.getMessage());
             throw new Exception(e.getMessage());

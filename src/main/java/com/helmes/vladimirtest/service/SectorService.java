@@ -9,5 +9,5 @@ public interface SectorService {
 
     List<SectorEntity> collectSectorsFromIdList(String selectedSectorList);
 
-    Model listSectors(Model model) throws Exception;
+    void listSectors(Model model) throws Exception;
 }

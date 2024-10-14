@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 public class UserServiceTest {
 
@@ -40,13 +42,6 @@ public class UserServiceTest {
     void tearDown() {
         userRepository.deleteAll();
     }
-
-    /*@Test
-    void saveUser_shouldReturnException_selectedSectorsNotFound() throws Exception {
-        selectedSectorList = "";
-        var apiResponseDtoResponseEntity = userService.saveUser(selectedSectorList, userDto);
-        assertEquals(ApiResponseStatus.FAIL, apiResponseDtoResponseEntity.getStatusCode());
-    }*/
 
     @Test
     void updateUser() {

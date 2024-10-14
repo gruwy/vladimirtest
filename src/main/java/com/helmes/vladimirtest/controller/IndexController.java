@@ -28,38 +28,38 @@ public class IndexController {
     private final String refill = "Refill Form";
 
     @GetMapping("/")
-    public ResponseEntity<String> index(Model model) throws Exception {
+    public String index(Model model) throws Exception {
         indexService.initIndex(model);
-        return new ResponseEntity<>("index", HttpStatus.OK);
+        return "index";
     }
 
     @GetMapping("/refill")
-    public ResponseEntity<String> refillIndex(Model model,
+    public String refillIndex(Model model,
                               @Valid UserDto userDto) throws Exception {
         indexService.refillIndex(model, userDto);
-        return new ResponseEntity<>("index", HttpStatus.OK);
+        return "index";
     }
 
     @PostMapping("/execute")
-    public ResponseEntity<String> execute (Model model,
+    public String execute (Model model,
                                            @Param(value = "selectedSectorList") String selectedSectorList,
                                            @RequestParam(value="action") String action,
                                            @Valid UserDto userDto) throws Exception {
         switch (action) {
             case addUser -> {
                 userService.saveUser(selectedSectorList, userDto);
-                return new ResponseEntity<>("\"redirect:/\"", HttpStatus.CREATED);
+                return "redirect:/";
             }
             case updateUser -> {
                 userService.updateUser(selectedSectorList, userDto);
-                return new ResponseEntity<>("\"redirect:/\"", HttpStatus.OK);
+                return "redirect:/";
             }
             case refill -> {
                 refillIndex(model, userDto);
-                return new ResponseEntity<>("", HttpStatus.OK);
+                return "index";
             }
             default -> {
-                return new ResponseEntity<>("\"redirect:/\"", HttpStatus.OK);
+                return "redirect:/";
             }
         }
     }
