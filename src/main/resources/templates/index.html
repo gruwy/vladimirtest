@@ -27,7 +27,6 @@ Please enter your name and pick the Sectors you are currently involved in.
                     th:each="sectorDto : ${parentSectorList}"
                     th:label="${sectorDto.sectorName}"
                     th:value="${sectorDto}">
-                <th:block th:field="${parentSectorList}">
                     <option name = "selectedSectorIdString"
                             th:each="sectorDto : ${sectorDto.getSubSectors()}"
                             th:text="${sectorDto.sectorName}"
@@ -35,7 +34,6 @@ Please enter your name and pick the Sectors you are currently involved in.
                             th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
                     >
                     </option>
-                </th:block>
             </optgroup>
         </select>
     </div>
