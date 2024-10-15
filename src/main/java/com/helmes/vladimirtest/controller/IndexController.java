@@ -43,7 +43,6 @@ public class IndexController {
             model.addAttribute("userSectorList", userService.getUserSectorIdList(userDto));
         } catch (Exception e) {
             log.error("Failed to refill index with exception {}", e.getMessage());
-            model.addAttribute("error", e.getMessage());
             throw new Exception(e.getMessage());
         }
         return "index";
