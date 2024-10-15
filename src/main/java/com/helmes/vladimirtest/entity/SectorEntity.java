@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -28,7 +27,7 @@ public class SectorEntity {
     private SectorEntity parentSector;
 
     @OneToMany(mappedBy = "parentSector")
-    private List<SectorEntity> subSectors = new ArrayList<>();
+    private List<SectorEntity> subSectors;
 
     @Column(name = "sector_name", nullable = false)
     private String sectorName;
@@ -41,9 +40,7 @@ public class SectorEntity {
         return "SectorEntity{" +
                 "id=" + id +
                 ", parentSector=" + parentSector +
-                ", subSectors=" + subSectors +
                 ", sectorName='" + sectorName + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

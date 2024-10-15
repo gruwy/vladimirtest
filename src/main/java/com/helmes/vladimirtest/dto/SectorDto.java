@@ -19,11 +19,13 @@ public class SectorDto {
     @NotNull
     private long id;
 
-    private SectorEntity parentSectorId;
+    private SectorEntity parentSector;
 
     private List<SectorEntity> subSectors;
 
     @NotNull
     @Size(min = 1, max = 255)
     private String sectorName;
+
+    private List<UserDto> users;
 }

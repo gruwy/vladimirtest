@@ -11,4 +11,7 @@ import java.util.List;
 public interface SectorRepository extends JpaRepository<SectorEntity, Long> {
     @Query("SELECT s FROM sector s JOIN sector ps ON s.id = ps.parentSector.id")
     List<SectorEntity> getParentSectors();
+
+    @Query("SELECT s FROM sector s WHERE s.id IN (:selectedSectorList)")
+    List<SectorEntity> getSectorsByIdList(List<String> selectedSectorList);
 }

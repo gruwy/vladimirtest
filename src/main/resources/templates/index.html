@@ -12,25 +12,25 @@ Please enter your name and pick the Sectors you are currently involved in.
 <br />
 
 <form method="POST" th:action="@{/execute}">
-Name:
+    Name:
     <input type="text" id="userName" name="userName" th:value="*{userDto?.userName}" />
     <input type="submit" id="refill" name="action" value="Refill Form"/>
-<br />
-<br />
+    <br />
+    <br />
 
-Sectors:
+    Sectors:
 
-<br />
+    <br />
     <div th:if="${not #lists.isEmpty(parentSectorList)}">
         <select multiple size="10" class="form-control" name = "selectedSectorList">
             <optgroup
                     th:each="sectorDto : ${parentSectorList}"
-                    th:label="${sectorDto.getSectorName()}"
-                    th:value="${sectorDto.id}">
+                    th:label="${sectorDto.sectorName}"
+                    th:value="${sectorDto}">
                 <th:block th:field="${parentSectorList}">
                     <option name = "selectedSectorIdString"
                             th:each="sectorDto : ${sectorDto.getSubSectors()}"
-                            th:text="${sectorDto.getSectorName()}"
+                            th:text="${sectorDto.sectorName}"
                             th:value="${sectorDto.id}"
                             th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
                     >
@@ -42,13 +42,13 @@ Sectors:
 
     <div th:if="${#lists.isEmpty(parentSectorList)}">
         <select multiple size="10" class="form-control" name = "selectedSectorList">
-                    <option name = "selectedSectorIdString"
-                            th:each="sectorDto : ${sectorList}"
-                            th:text="${sectorDto.getSectorName()}"
-                            th:value="${sectorDto.id}"
-                            th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
-                    >
-                    </option>
+            <option name = "selectedSectorIdString"
+                    th:each="sectorDto : ${sectorList}"
+                    th:text="${sectorDto.getSectorName()}"
+                    th:value="${sectorDto.id}"
+                    th:selected="${#lists.contains(userSectorList, sectorDto.id)}"
+            >
+            </option>
             </optgroup>
         </select>
     </div>

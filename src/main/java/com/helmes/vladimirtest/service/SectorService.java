@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface SectorService {
 
-    List<SectorDto> collectSectorsFromIdList(String selectedSectorList);
-
     List<SectorDto> listAllSectors() throws Exception;
 
     List<SectorDto> listParentSectors() throws Exception;
