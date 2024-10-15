@@ -3,6 +3,7 @@ package com.helmes.vladimirtest.service;
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.entity.UserEntity;
+import com.helmes.vladimirtest.mapper.SectorMapper;
 import com.helmes.vladimirtest.mapper.UserMapper;
 import com.helmes.vladimirtest.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -16,29 +17,31 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@Transactional
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final SectorService sectorService;
     private UserMapper userMapper;
+    private SectorMapper sectorMapper;
 
-    @Transactional
+
     @Override
     public UserDto saveUser(String selectedSectorList, UserDto userDto) throws Exception {
         try {
-            if (selectedSectorList == null) {
-                throw new Exception("Failed to create user with exception: No sectors chosen by the user");
-            }
-
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user != null) {
                 throw new Exception("Failed to create user with exception: User already exists with name " + userDto.getUserName());
             } else user = new UserEntity();
 
+            if (selectedSectorList == null) {
+                throw new Exception("Failed to create user with exception: No sectors chosen by the user");
+            }
+
             var userSectorList = sectorService.collectSectorsFromIdList(selectedSectorList);
             user.setUserName(userDto.getUserName());
-            user.setSectors(userSectorList);
+            user.setSectors(sectorMapper.toEntity(userSectorList));
             user.setAgreedToTerms(userDto.getAgreedToTerms());
             var savedUser = userRepository.save(user);
             return userMapper.toDto(savedUser);
@@ -50,7 +53,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Transactional
     @Override
     public Optional<UserDto> updateUser(String selectedSectorList, UserDto userDto) throws Exception {
         try {
@@ -58,10 +60,13 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 throw new Exception("Failed to update user with exception: User not found with name " + userDto.getUserName());
             }
+
             if (selectedSectorList == null) {
                 throw new Exception("Failed to update user with exception: No sectors chosen by the user.");
             }
-            user.setSectors(sectorService.collectSectorsFromIdList(selectedSectorList));
+
+            var userSectorList = sectorService.collectSectorsFromIdList(selectedSectorList);
+            user.setSectors(sectorMapper.toEntity(userSectorList));
             var savedUser = userRepository.save(user);
             return Optional.of(userMapper.toDto(savedUser));
 

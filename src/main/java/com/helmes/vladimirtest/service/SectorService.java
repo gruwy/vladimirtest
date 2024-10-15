@@ -1,13 +1,14 @@
 package com.helmes.vladimirtest.service;
 
-import com.helmes.vladimirtest.entity.SectorEntity;
-import org.springframework.ui.Model;
+import com.helmes.vladimirtest.dto.SectorDto;
 
 import java.util.List;
 
 public interface SectorService {
 
-    List<SectorEntity> collectSectorsFromIdList(String selectedSectorList);
+    List<SectorDto> collectSectorsFromIdList(String selectedSectorList);
 
-    void listSectors(Model model) throws Exception;
+    List<SectorDto> listAllSectors() throws Exception;
+
+    List<SectorDto> listParentSectors() throws Exception;
 }

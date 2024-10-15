@@ -1,10 +1,11 @@
 package com.helmes.vladimirtest.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
-import com.helmes.vladimirtest.service.IndexService;
+import com.helmes.vladimirtest.service.SectorService;
 import com.helmes.vladimirtest.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,24 +15,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/")
 public class IndexController {
 
-    private final IndexService indexService;
     private final UserService userService;
+    private final SectorService sectorService;
 
     @GetMapping("/")
     public String index(Model model) throws Exception {
-        indexService.initIndex(model);
+        try {
+            prepareModel(model);
+            model.addAttribute("userSectorList", "");
+        } catch (Exception e) {
+            log.error("Failed to initialize index with exception {}", e.getMessage());
+            throw new Exception(e.getMessage());
+        }
         return "index";
     }
 
     @GetMapping("/refill")
     public String refillIndex(Model model,
                               @Valid UserDto userDto) throws Exception {
-        indexService.refillIndex(model, userDto);
+        try {
+            prepareModel(model);
+            model.addAttribute("userSectorList", userService.getUserSectorIdList(userDto));
+        } catch (Exception e) {
+            log.error("Failed to refill index with exception {}", e.getMessage());
+            model.addAttribute("error", e.getMessage());
+            throw new Exception(e.getMessage());
+        }
         return "index";
+    }
+
+    private void prepareModel(Model model) throws Exception {
+        model.addAttribute("parentSectorList",  sectorService.listParentSectors());
+        model.addAttribute("sectorList", sectorService.listAllSectors());
     }
 
     @PostMapping("/execute")
