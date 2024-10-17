@@ -1,7 +1,6 @@
 package com.helmes.vladimirtest.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
-import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.exception.*;
 import com.helmes.vladimirtest.service.SectorService;
 import com.helmes.vladimirtest.service.UserService;
@@ -12,8 +11,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -43,7 +40,7 @@ public class IndexController {
     @GetMapping("/refill")
     public String refillIndex(Model model,
                               @Valid UserDto userDto)
-            throws PrepareModelException, UserNotFoundException, UserServiceLogicException, SectorsNotFoundForUserException {
+            throws PrepareModelException, UserNotFoundException, UserServiceLogicException, UserSectorsNotFoundException {
 
         prepareModel(model);
         var userSectorIdList = userService.getUserSectorIdList(userDto);
@@ -76,7 +73,7 @@ public class IndexController {
                            @RequestParam(value="action") String action,
                            @Valid @ModelAttribute("userDto") UserDto userDto)
             throws NoSectorsChosenException, UserAlreadyExistsException, UserServiceLogicException,
-                   UserNotFoundException, PrepareModelException, SectorsNotFoundForUserException {
+                   UserNotFoundException, PrepareModelException, UserSectorsNotFoundException {
 
         switch (action) {
             case addUser -> {

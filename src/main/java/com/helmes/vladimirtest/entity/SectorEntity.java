@@ -1,6 +1,5 @@
 package com.helmes.vladimirtest.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 

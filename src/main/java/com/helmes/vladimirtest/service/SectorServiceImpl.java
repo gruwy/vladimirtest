@@ -23,7 +23,6 @@ public class SectorServiceImpl implements SectorService {
     @Override
     public List<SectorDto> listAllSectors() throws SectorServiceLogicException {
         try {
-
             var sectorList = sectorRepository.findAll();
             var dto = sectorMapper.toDto(sectorList);
 

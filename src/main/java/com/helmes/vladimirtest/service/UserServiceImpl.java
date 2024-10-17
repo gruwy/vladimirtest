@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Long> getUserSectorIdList(UserDto userDto) throws UserNotFoundException, SectorsNotFoundForUserException, UserServiceLogicException {
+    public List<Long> getUserSectorIdList(UserDto userDto) throws UserNotFoundException, UserSectorsNotFoundException, UserServiceLogicException {
         try {
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user == null) {
@@ -101,16 +101,17 @@ public class UserServiceImpl implements UserService {
             }
             var userSectors = user.getSectors();
             if (userSectors.isEmpty()) {
-                throw new SectorsNotFoundForUserException("Failed to get user sector list with exception: Sector list not found for user {}" + userDto.getUserName());
+                throw new UserSectorsNotFoundException("Failed to get user sector list with exception: Sector list not found for user " + userDto.getUserName());
             }
 
-            var userSectorIdList = userSectors.stream().map(SectorEntity::getId).collect(Collectors.toList());
+            var userSectorIdList = userSectors.stream().map(SectorEntity::getId).toList();
+            System.out.println(userSectorIdList);
 
             return userSectorIdList;
         } catch (UserNotFoundException e) {
             throw new UserNotFoundException(e.getMessage());
-        } catch (SectorsNotFoundForUserException e) {
-            throw new SectorsNotFoundForUserException(e.getMessage());
+        } catch (UserSectorsNotFoundException e) {
+            throw new UserSectorsNotFoundException(e.getMessage());
         } catch(Exception e) {
             log.error("Failed to get sector id list for user {} with exception {}", userDto.getUserName(), e.getMessage());
             throw new UserServiceLogicException();

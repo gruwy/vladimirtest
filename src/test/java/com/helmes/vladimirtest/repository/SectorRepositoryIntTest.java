@@ -1,16 +1,17 @@
 package com.helmes.vladimirtest.repository;
 
+import com.helmes.vladimirtest.entity.SectorEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class SectorRepositoryTest {
+class SectorRepositoryIntTest {
 
     @Autowired
     private SectorRepository sectorRepository;
@@ -19,5 +20,13 @@ class SectorRepositoryTest {
     void getParentSectors_ReturnsParentSectors() {
         assertInstanceOf(List.class, sectorRepository.getParentSectors());
         assertNotNull(sectorRepository.getParentSectors());
+    }
+
+    @Test
+    void getParentSectors_ReturnsNoParentSectors() {
+        sectorRepository.deleteAll();
+        assertInstanceOf(List.class, sectorRepository.getParentSectors());
+        var emptySectorList = new ArrayList<SectorEntity>();
+        assertEquals(sectorRepository.getParentSectors(), emptySectorList);
     }
 }

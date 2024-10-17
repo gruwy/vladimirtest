@@ -11,5 +11,5 @@ public interface UserService {
 
     UserDto updateUser(String selectedSectorList, UserDto userDto) throws UserNotFoundException, NoSectorsChosenException, UserServiceLogicException;
 
-    List<Long> getUserSectorIdList(UserDto userDto) throws UserNotFoundException, SectorsNotFoundForUserException, UserServiceLogicException;
+    List<Long> getUserSectorIdList(UserDto userDto) throws UserNotFoundException, UserSectorsNotFoundException, UserServiceLogicException;
 }
