@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class SectorServiceIntTest {
 
@@ -29,6 +28,7 @@ public class SectorServiceIntTest {
     @Autowired
     private SectorService sectorService;
 
+    @DirtiesContext
     @Test
     void listAllSectors_noSectorData() throws SectorServiceLogicException {
         sectorRepository.deleteAll();
@@ -51,6 +51,7 @@ public class SectorServiceIntTest {
         assertEquals(referenceSectorList, serviceSectorList);
     }
 
+    @DirtiesContext
     @Test
     void listParentSectors_noSectorData() throws SectorServiceLogicException {
         sectorRepository.deleteAll();
