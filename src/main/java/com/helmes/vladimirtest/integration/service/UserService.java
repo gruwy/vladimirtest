@@ -1,4 +1,4 @@
-package com.helmes.vladimirtest.service;
+package com.helmes.vladimirtest.integration.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.exception.*;

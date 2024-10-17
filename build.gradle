@@ -53,5 +53,6 @@ dependencies {
 apply from: "gradle/liquibase.gradle"
 
 tasks.named('test') {
+	forkEvery = 1
 	useJUnitPlatform()
 }

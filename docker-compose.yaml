@@ -1,4 +1,16 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/vladimirtest
+      - SPRING_DATASOURCE_USERNAME=helmes
+      - SPRING_DATASOURCE_PASSWORD=helmes
 
   db:
     image: postgres:14-alpine

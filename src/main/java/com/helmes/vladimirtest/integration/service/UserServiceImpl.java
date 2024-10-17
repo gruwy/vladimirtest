@@ -1,12 +1,12 @@
-package com.helmes.vladimirtest.service;
+package com.helmes.vladimirtest.integration.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.entity.UserEntity;
 import com.helmes.vladimirtest.exception.*;
 import com.helmes.vladimirtest.mapper.UserMapper;
-import com.helmes.vladimirtest.repository.SectorRepository;
-import com.helmes.vladimirtest.repository.UserRepository;
+import com.helmes.vladimirtest.integration.repository.SectorRepository;
+import com.helmes.vladimirtest.integration.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j

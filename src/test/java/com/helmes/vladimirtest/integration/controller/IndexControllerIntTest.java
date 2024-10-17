@@ -1,4 +1,4 @@
-package com.helmes.vladimirtest.controller;
+package com.helmes.vladimirtest.integration.controller;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -1,9 +1,9 @@
-package com.helmes.vladimirtest.service;
+package com.helmes.vladimirtest.integration.service;
 
 import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.exception.SectorServiceLogicException;
 import com.helmes.vladimirtest.mapper.SectorMapper;
-import com.helmes.vladimirtest.repository.SectorRepository;
+import com.helmes.vladimirtest.integration.repository.SectorRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;

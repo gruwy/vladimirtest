@@ -1,9 +1,9 @@
-package com.helmes.vladimirtest.controller;
+package com.helmes.vladimirtest.integration.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.exception.*;
-import com.helmes.vladimirtest.service.SectorService;
-import com.helmes.vladimirtest.service.UserService;
+import com.helmes.vladimirtest.integration.service.SectorService;
+import com.helmes.vladimirtest.integration.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.helmes.vladimirtest.service;
+package com.helmes.vladimirtest.integration.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.SectorEntity;
@@ -7,8 +7,8 @@ import com.helmes.vladimirtest.exception.UserAlreadyExistsException;
 import com.helmes.vladimirtest.exception.UserNotFoundException;
 import com.helmes.vladimirtest.exception.UserSectorsNotFoundException;
 import com.helmes.vladimirtest.mapper.UserMapperImpl;
-import com.helmes.vladimirtest.repository.SectorRepository;
-import com.helmes.vladimirtest.repository.UserRepository;
+import com.helmes.vladimirtest.integration.repository.SectorRepository;
+import com.helmes.vladimirtest.integration.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

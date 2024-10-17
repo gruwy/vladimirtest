@@ -1,9 +1,9 @@
-package com.helmes.vladimirtest.service;
+package com.helmes.vladimirtest.integration.service;
 
 import com.helmes.vladimirtest.dto.SectorDto;
 import com.helmes.vladimirtest.exception.SectorServiceLogicException;
 import com.helmes.vladimirtest.mapper.SectorMapper;
-import com.helmes.vladimirtest.repository.SectorRepository;
+import com.helmes.vladimirtest.integration.repository.SectorRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
