@@ -14,4 +14,5 @@ public interface SectorRepository extends JpaRepository<SectorEntity, Long> {
 
     @Query("SELECT s FROM sector s WHERE s.id IN (:selectedSectorList)")
     List<SectorEntity> getSectorsByIdList(List<String> selectedSectorList);
+
 }

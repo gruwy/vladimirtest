@@ -27,7 +27,7 @@ Please enter your name and pick the Sectors you are currently involved in.
                     th:each="sectorDto : ${parentSectorList}"
                     th:label="${sectorDto.sectorName}"
                     th:value="${sectorDto}">
-                    <option name = "selectedSectorIdString"
+                <option
                             th:each="sectorDto : ${sectorDto.getSubSectors()}"
                             th:text="${sectorDto.sectorName}"
                             th:value="${sectorDto.id}"
@@ -40,7 +40,7 @@ Please enter your name and pick the Sectors you are currently involved in.
 
     <div th:if="${#lists.isEmpty(parentSectorList)}">
         <select multiple size="10" class="form-control" name = "selectedSectorList">
-            <option name = "selectedSectorIdString"
+            <option
                     th:each="sectorDto : ${sectorList}"
                     th:text="${sectorDto.getSectorName()}"
                     th:value="${sectorDto.id}"

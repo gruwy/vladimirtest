@@ -27,5 +27,4 @@ public class SectorDto {
     @Size(min = 1, max = 255)
     private String sectorName;
 
-    private List<UserDto> users;
 }

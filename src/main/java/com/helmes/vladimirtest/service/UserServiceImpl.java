@@ -3,6 +3,7 @@ package com.helmes.vladimirtest.service;
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.entity.UserEntity;
+import com.helmes.vladimirtest.exception.*;
 import com.helmes.vladimirtest.mapper.UserMapper;
 import com.helmes.vladimirtest.repository.SectorRepository;
 import com.helmes.vladimirtest.repository.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -22,87 +24,96 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final SectorRepository sectorRepository;
 
-    private final UserMapper userMapper;
-
     @Override
-    public UserDto saveUser(String selectedSectorIds, UserDto userDto) throws Exception {
+    public UserDto saveUser(String selectedSectorIds, UserDto userDto) throws UserAlreadyExistsException, NoSectorsChosenException, UserServiceLogicException {
         try {
+
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user != null) {
-                throw new Exception("Failed to create user with exception: User already exists with name " + userDto.getUserName());
+                throw new UserAlreadyExistsException("Failed to create user with exception: User already exists with name " + userDto.getUserName());
             } else user = new UserEntity();
 
-            if (selectedSectorIds == null) {
-                throw new Exception("Failed to create user with exception: No sectors chosen by the user");
+            if (selectedSectorIds.isEmpty()) {
+                throw new NoSectorsChosenException("Failed to create user with exception: No sectors chosen by the user");
             }
+
             List<String> sectorSectorIdList = new ArrayList<>(Arrays.asList(selectedSectorIds.split(",")));
             var userSectorList = sectorRepository.getSectorsByIdList(sectorSectorIdList);
-
             user.setUserName(userDto.getUserName());
             user.setSectors(userSectorList);
             user.setAgreedToTerms(userDto.getAgreedToTerms());
-
             var savedUser = userRepository.save(user);
+            var dto = userMapper.toDto(savedUser);
 
-            return userMapper.toDto(savedUser);
+            return dto;
 
-        }  catch (Exception e) {
+        } catch (UserAlreadyExistsException e) {
+            throw new UserAlreadyExistsException(e.getMessage());
+        } catch (NoSectorsChosenException e) {
+            throw new NoSectorsChosenException(e.getMessage());
+        } catch (Exception e) {
             log.error("Failed to create user with exception: {}", e.getMessage());
-            throw new Exception(e.getMessage());
+            throw new UserServiceLogicException();
         }
 
     }
 
     @Override
-    public UserDto updateUser(String selectedSectorIds, UserDto userDto) throws Exception {
+    public UserDto updateUser(String selectedSectorIds, UserDto userDto) throws UserNotFoundException, NoSectorsChosenException, UserServiceLogicException {
         try {
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user == null) {
-                throw new Exception("Failed to update user with exception: User not found with name " + userDto.getUserName());
+                throw new UserNotFoundException("Failed to update user with exception: User not found with name " + userDto.getUserName());
             }
 
-            if (selectedSectorIds == null) {
-                throw new Exception("Failed to update user with exception: No sectors chosen by the user");
+            if (selectedSectorIds.isEmpty()) {
+                throw new NoSectorsChosenException("Failed to update user with exception: No sectors chosen by the user");
             }
+
             List<String> sectorSectorIdList = new ArrayList<>(Arrays.asList(selectedSectorIds.split(",")));
             var userSectorList = sectorRepository.getSectorsByIdList(sectorSectorIdList);
-
             user.setSectors(userSectorList);
 
             var savedUser = userRepository.save(user);
+            var dto = userMapper.toDto(savedUser);
 
-            return userMapper.toDto(savedUser);
+            return dto;
 
+        } catch (UserNotFoundException e) {
+            throw new UserNotFoundException(e.getMessage());
+        } catch (NoSectorsChosenException e) {
+            throw new NoSectorsChosenException(e.getMessage());
         } catch(Exception e) {
             log.error("Failed to update user {} with exception {}", userDto.getUserName(), e.getMessage());
-            throw new Exception(e.getMessage());
+            throw new UserServiceLogicException();
         }
     }
 
     @Override
-    public List<Long> getUserSectorIdList(UserDto userDto) throws Exception {
+    public List<Long> getUserSectorIdList(UserDto userDto) throws UserNotFoundException, SectorsNotFoundForUserException, UserServiceLogicException {
         try {
             var user = userRepository.findByUserName(userDto.getUserName());
             if (user == null) {
-                throw new Exception("Failed to get user sector id list with exception: User not found with name " + userDto.getUserName());
+                throw new UserNotFoundException("Failed to get user sector list with exception: User not found with name " + userDto.getUserName());
             }
             var userSectors = user.getSectors();
             if (userSectors.isEmpty()) {
-                throw new Exception("Failed to get user sector id list with exception: Sector list not found for user {}" + userDto.getUserName());
+                throw new SectorsNotFoundForUserException("Failed to get user sector list with exception: Sector list not found for user {}" + userDto.getUserName());
             }
 
-            List<Long> userSectorIdList = new ArrayList<>();
-            for (SectorEntity sectorEntity : userSectors) {
-                var sectorId = sectorEntity.getId();
-                userSectorIdList.add(sectorId);
-            }
+            var userSectorIdList = userSectors.stream().map(SectorEntity::getId).collect(Collectors.toList());
 
             return userSectorIdList;
+        } catch (UserNotFoundException e) {
+            throw new UserNotFoundException(e.getMessage());
+        } catch (SectorsNotFoundForUserException e) {
+            throw new SectorsNotFoundForUserException(e.getMessage());
         } catch(Exception e) {
-            log.error("Failed to get user {} sector id list with exception {}", userDto.getUserName(), e.getMessage());
-            throw new Exception(e.getMessage());
+            log.error("Failed to get sector id list for user {} with exception {}", userDto.getUserName(), e.getMessage());
+            throw new UserServiceLogicException();
         }
     }
 }

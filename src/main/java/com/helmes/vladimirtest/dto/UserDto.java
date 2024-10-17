@@ -1,5 +1,6 @@
 package com.helmes.vladimirtest.dto;
 
+import com.helmes.vladimirtest.entity.SectorEntity;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -28,5 +29,6 @@ public class UserDto {
     @AssertTrue(message = "Must agree to Terms!")
     private Boolean agreedToTerms;
 
-    private List<SectorDto> sectors;
+    private List<SectorEntity> sectors;
+
 }

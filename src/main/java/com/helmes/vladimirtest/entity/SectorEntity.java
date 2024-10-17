@@ -21,7 +21,6 @@ public class SectorEntity {
     @Column(name = "id")
     private Long id;
 
-    @JsonBackReference
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "parent_sector_id")
     private SectorEntity parentSector;
