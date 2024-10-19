@@ -1,9 +1,9 @@
-package com.helmes.vladimirtest.integration.controller;
+package com.helmes.vladimirtest.controller;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.exception.*;
-import com.helmes.vladimirtest.integration.service.SectorService;
-import com.helmes.vladimirtest.integration.service.UserService;
+import com.helmes.vladimirtest.service.SectorService;
+import com.helmes.vladimirtest.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class IndexController {
             throws PrepareModelException {
 
         prepareModel(model);
-        model.addAttribute("userSectorList", "");
+        model.addAttribute("userSectorIdList", "");
 
         return index;
     }
@@ -44,34 +44,16 @@ public class IndexController {
 
         prepareModel(model);
         var userSectorIdList = userService.getUserSectorIdList(userDto);
-        model.addAttribute("userSectorList", userSectorIdList);
+        model.addAttribute("userSectorIdList", userSectorIdList);
 
         return index;
-    }
-
-    private Model prepareModel(Model model)
-            throws PrepareModelException {
-        try {
-            var parentSectorList = sectorService.listParentSectors();
-            var allSectors = sectorService.listAllSectors();
-
-            model.addAttribute("parentSectorList", parentSectorList);
-            model.addAttribute("sectorList", allSectors);
-
-            return model;
-
-        } catch (Exception e) {
-            log.error("Failed to prepare sector data model with exception {}", e.getMessage());
-            throw new PrepareModelException();
-        }
-
     }
 
     @PostMapping("/execute")
     public String execute (Model model,
                            @Param(value = "selectedSectorList") String selectedSectorList,
                            @RequestParam(value="action") String action,
-                           @Valid @ModelAttribute("userDto") UserDto userDto)
+                           @Valid UserDto userDto)
             throws NoSectorsChosenException, UserAlreadyExistsException, UserServiceLogicException,
                    UserNotFoundException, PrepareModelException, UserSectorsNotFoundException {
 
@@ -92,5 +74,23 @@ public class IndexController {
                 return redirect;
             }
         }
+    }
+
+    private Model prepareModel(Model model)
+            throws PrepareModelException {
+        try {
+            var parentSectorList = sectorService.listParentSectors();
+            var sectorList = sectorService.listAllSectors();
+
+            model.addAttribute("parentSectorList", parentSectorList);
+            model.addAttribute("sectorList", sectorList);
+
+            return model;
+
+        } catch (Exception e) {
+            log.error("Failed to prepare sector data model with exception {}", e.getMessage());
+            throw new PrepareModelException();
+        }
+
     }
 }

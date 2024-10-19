@@ -1,4 +1,4 @@
-package com.helmes.vladimirtest.integration.service;
+package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.SectorDto;
 import com.helmes.vladimirtest.exception.SectorServiceLogicException;

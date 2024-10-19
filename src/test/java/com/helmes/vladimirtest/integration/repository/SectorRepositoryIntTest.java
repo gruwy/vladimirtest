@@ -1,6 +1,7 @@
 package com.helmes.vladimirtest.integration.repository;
 
 import com.helmes.vladimirtest.entity.SectorEntity;
+import com.helmes.vladimirtest.repository.SectorRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.helmes.vladimirtest.integration.repository;
+package com.helmes.vladimirtest.repository;
 
 import com.helmes.vladimirtest.entity.SectorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

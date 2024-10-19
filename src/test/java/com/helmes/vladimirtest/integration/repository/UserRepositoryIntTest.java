@@ -1,6 +1,7 @@
 package com.helmes.vladimirtest.integration.repository;
 
 import com.helmes.vladimirtest.entity.UserEntity;
+import com.helmes.vladimirtest.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

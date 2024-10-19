@@ -1,12 +1,12 @@
-package com.helmes.vladimirtest.integration.service;
+package com.helmes.vladimirtest.service;
 
 import com.helmes.vladimirtest.dto.UserDto;
 import com.helmes.vladimirtest.entity.SectorEntity;
 import com.helmes.vladimirtest.entity.UserEntity;
 import com.helmes.vladimirtest.exception.*;
 import com.helmes.vladimirtest.mapper.UserMapper;
-import com.helmes.vladimirtest.integration.repository.SectorRepository;
-import com.helmes.vladimirtest.integration.repository.UserRepository;
+import com.helmes.vladimirtest.repository.SectorRepository;
+import com.helmes.vladimirtest.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -104,7 +104,6 @@ public class UserServiceImpl implements UserService {
             }
 
             var userSectorIdList = userSectors.stream().map(SectorEntity::getId).toList();
-            System.out.println(userSectorIdList);
 
             return userSectorIdList;
         } catch (UserNotFoundException e) {
