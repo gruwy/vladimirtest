@@ -1,6 +1,7 @@
 package com.helmes.vladimirtest.dto;
 
 import com.helmes.vladimirtest.entity.SectorEntity;
+import com.helmes.vladimirtest.entity.UserEntity;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,5 @@ public class SectorDto {
     @Size(min = 1, max = 255)
     private String sectorName;
 
+    private List<UserEntity> users;
 }
