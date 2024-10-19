@@ -18,17 +18,6 @@ liquibase {
             logLevel "debug"
             classpath "src/main/resources/"
         }
-        diffLog {
-            url project.ext.mainUrl
-            username project.ext.mainUsername
-            password project.ext.mainPassword
-            changelogFile 'src/main/resources/changelog/master.xml'
-            difftypes 'data'
-            changelogFile project.ext.diffChangelogFile
-            referenceUrl "hibernate:spring:com.helmes.vladimirtest.domain?dialect=org.hibernate.dialect.PostgreSQL10Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-            defaultSchemaName ""
-            classpath "$buildDir/classes/java/main"
-        }
     }
     runList = project.ext.runList
 }
